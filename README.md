@@ -71,6 +71,11 @@ easypackages::libraries("tidyverse", "tidymodels","devtools", "datos", "kknn", "
 
 Tanto la [presentación]() como los [archivos rmarkdown]() se encuentran en la carpeta **Material**.
 
+:video_camera: Video 
+-------------------------------------------------------------
+
+El video estará disponible en el canal de [Youtube de LatinR](https://www.youtube.com/channel/UCt950nC6jlh2ELDRPigWOkg)
+
 📓 **Bibliografía**
 -------------------------------------------------------------------------------------------------------------------
 
