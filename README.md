@@ -1,7 +1,7 @@
 # Introducción a machine learning con Tidymodels
 
 
-Presentadoras: Roxana Noelia Villafañe, Ana Laura Diedrichs y Patricia Loto. 
+Presentadoras: [Roxana Noelia Villafañe](https://twitter.com/data_datum), [Ana Laura Diedrichs](https://twitter.com/anadiedrichs) y [Patricia Loto](https://twitter.com/patriloto) 
 
 
 Fecha y Lugar
