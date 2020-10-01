@@ -32,6 +32,13 @@ Si crees que debes reforzar algún punto de los enunciados anteriormente, podes 
 # Objetivos de aprendizaje
 Los estudiantes aprenderan a entrenar, supervisar y generar predicciones con modelos de Machine Learning con los paquetes de Tidymodels.
 
+:memo: Inscripción
+------------------------------------------------------------
+La inscripción puede realizarse mediante las cuentas de meetup de
+* [Rladies Resistencia Corrientes](https://www.meetup.com/es/rladies-resistencia-corrientes/events/273547256/)
+* [Rladies Cuernavaca](https://www.meetup.com/es/rladies-cuernavaca/events/273559022/)
+* [Rladies Mendoza](https://www.meetup.com/es/rladies-mendoza/events/273489088/)
+
 
 💻 Antes del workshop
 ------------------------------------------------------------
