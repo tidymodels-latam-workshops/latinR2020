@@ -38,7 +38,7 @@ La inscripción puede realizarse mediante las cuentas de meetup de
 
 
 # Objetivos de aprendizaje
-Los estudiantes aprenderan a entrenar, supervisar y generar predicciones con modelos de Machine Learning con los paquetes de Tidymodels.
+Los estudiantes entenderán cómo se entrenan, evalúan y generan predicciones con modelos de Regresión y Clasificación utilizando los paquetes del universo Tidymodels.
 
 💻 Antes del workshop
 ------------------------------------------------------------
