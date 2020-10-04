@@ -73,6 +73,50 @@ class: animated slideInRight fadeOutLeft, middle
 
 ---
 
+# Árboles de decisión
+
+  
+&lt;img src="img/bret-tree.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+.footnote[Imagen tomada de https://www.packtpub.com/big-data-and-business-intelligence/machine-learning-r-second-edition]
+
+---
+
+## Hiperparámetro
+
+
+
+.bg-near-white.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
+### Un hiperparámetro es una propiedad de un algoritmo de aprendizaje. Este valor influencia la forma en que trabaja el algoritmo. Estos valores no son aprendidos por el algoritmo desde los datos. Deben ser seteados antes de correr el algoritmo por el analista. 
+]
+
+
+.footnote[The Hundred-page machine learning book. Andriy Burkov]
+
+
+---
+
+## Hiperparámetros de 
+## árboles de decisión
+
+* **min_n**
+
+Establezca n mínimo para dividir en cualquier nodo.
+Es un método de parada temprana. Se utiliza para evitar el sobreajuste.
+
+* **tree_depth**
+
+Pone un límite a la profundidad máxima del árbol.
+Un método para detener el algoritmo. Se utiliza para evitar el sobreajuste.
+
+* **cost_complexity**
+
+Agrega un costo o penalización a los errores de árboles más complejos. 
+Es una forma de poda. Utilizado para evitar el sobreajuste (overfitting).
+
+---
+
 ## Vamos a modelar las especies 🐧
 
 ### Ingreso los datos 
@@ -295,8 +339,7 @@ trees_spec %&gt;%
 background-image: url(img/dt-fondo.png)
 background-size: cover
 
-
-
+  
 # Ejercicio
 
 
@@ -308,7 +351,7 @@ background-size: cover
 ]
 
 
-<div class="countdown" id="timer_5f7a050c" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7a3666" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -394,7 +437,7 @@ background-size: cover
 #### Repetir estos pasos para el modelo de C=0 y min_n=5
 ]
 
-<div class="countdown" id="timer_5f7a062f" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7a3694" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -559,6 +602,66 @@ class: animated slideInRight fadeOutLeft, middle
 
 
 # Random Forest
+
+
+---
+
+
+# Random Forest
+
+ 
+&lt;img src="img/random-forest1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+---
+
+# Bootstraping
+
+ 
+&lt;img src="img/random-forest2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+
+---
+
+# Bagging
+ 
+&lt;img src="img/random-forest3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+.footnote[Imagen tomada de]
+
+---
+### Veamos que sucede al clasificar el conjunto de testeo
+ 
+&lt;img src="img/random-forest4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+---
+### Voto mayoritario (majority vote)
+ 
+&lt;img src="img/random-forest5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+
+---
+
+### Hiperparámetros de 
+### random forest
+
+### mtry
+* El número de predictores a muestrearse en cada split de árbol
+
+--
+
+### min_n
+* el número de observaciones necesarias para seguir dividiendo nodos
+
 
 
 ---
@@ -842,7 +945,7 @@ background-size: cover
 
 ## Rango de valores para min_n y mtry
 
-![](02-clasificacion-tuneo_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+![](02-clasificacion-tuneo_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
 
 
 ---
@@ -869,7 +972,7 @@ final_rf
 ## Random Forest Model Specification (classification)
 ## 
 ## Main Arguments:
-##   mtry = 4
+##   mtry = 2
 ##   trees = 1000
 ##   min_n = 4
 ## 
@@ -901,8 +1004,8 @@ final_res %&gt;%
 ## # A tibble: 2 x 3
 ##   .metric  .estimator .estimate
 ##   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-## 1 accuracy multiclass     0.952
-## 2 roc_auc  hand_till      0.999
+## 1 accuracy multiclass     0.988
+## 2 roc_auc  hand_till      1
 ```
 
 
@@ -924,9 +1027,9 @@ final_res %&gt;%
 ```
 ##            Truth
 ## Prediction  Adelie Chinstrap Gentoo
-##   Adelie        39         0      1
-##   Chinstrap      2        11      1
-##   Gentoo         0         0     29
+##   Adelie        41         0      0
+##   Chinstrap      0        11      1
+##   Gentoo         0         0     30
 ```
 
 
@@ -944,7 +1047,7 @@ background-size: cover
 
 ]
 
-<div class="countdown" id="timer_5f7a04a8" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7a34e4" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1059,7 +1162,7 @@ background-image: url(img/rf-fondo.png)
 background-size: cover
 
 ### Gráfico 
-![](02-clasificacion-tuneo_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+![](02-clasificacion-tuneo_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
 
 
 

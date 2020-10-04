@@ -88,6 +88,52 @@ class: animated slideInRight fadeOutLeft, middle
 
 ---
 
+# Árboles de decisión
+
+  
+```{r echo=FALSE, out.width = '100%',  fig.align='center'}
+knitr::include_graphics("img/bret-tree.png")
+```
+
+
+.footnote[Imagen tomada de https://www.packtpub.com/big-data-and-business-intelligence/machine-learning-r-second-edition]
+
+---
+
+## Hiperparámetro
+
+
+
+.bg-near-white.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
+### Un hiperparámetro es una propiedad de un algoritmo de aprendizaje. Este valor influencia la forma en que trabaja el algoritmo. Estos valores no son aprendidos por el algoritmo desde los datos. Deben ser seteados antes de correr el algoritmo por el analista. 
+]
+
+
+.footnote[The Hundred-page machine learning book. Andriy Burkov]
+
+
+---
+
+## Hiperparámetros de 
+## árboles de decisión
+
+* **min_n**
+
+Establezca n mínimo para dividir en cualquier nodo.
+Es un método de parada temprana. Se utiliza para evitar el sobreajuste.
+
+* **tree_depth**
+
+Pone un límite a la profundidad máxima del árbol.
+Un método para detener el algoritmo. Se utiliza para evitar el sobreajuste.
+
+* **cost_complexity**
+
+Agrega un costo o penalización a los errores de árboles más complejos. 
+Es una forma de poda. Utilizado para evitar el sobreajuste (overfitting).
+
+---
+
 ## Vamos a modelar las especies `r emo::ji("penguin")`
 
 ### Ingreso los datos 
@@ -228,8 +274,7 @@ trees_spec %>%
 background-image: url(img/dt-fondo.png)
 background-size: cover
 
-
-
+  
 # Ejercicio
 
 
@@ -474,6 +519,76 @@ class: animated slideInRight fadeOutLeft, middle
 
 
 # Random Forest
+
+
+---
+
+
+# Random Forest
+
+ 
+```{r echo=FALSE, out.width = '90%',  fig.align='center'}
+knitr::include_graphics("img/random-forest1.png")
+```
+
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+---
+
+# Bootstraping
+
+ 
+```{r echo=FALSE, out.width = '100%',  fig.align='center'}
+knitr::include_graphics("img/random-forest2.png")
+```
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+
+---
+
+# Bagging
+ 
+```{r echo=FALSE, out.width = '100%',  fig.align='center'}
+knitr::include_graphics("img/random-forest3.png")
+```
+
+
+.footnote[Imagen tomada de]
+
+---
+### Veamos que sucede al clasificar el conjunto de testeo
+ 
+```{r echo=FALSE, out.width = '100%',  fig.align='center'}
+knitr::include_graphics("img/random-forest4.png")
+```
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+---
+### Voto mayoritario (majority vote)
+ 
+```{r echo=FALSE, out.width = '100%',  fig.align='center'}
+knitr::include_graphics("img/random-forest5.png")
+```
+
+.footnote[Imagen tomada de https://conf20-intro-ml.netlify.com/]
+
+
+---
+
+### Hiperparámetros de 
+### random forest
+
+### mtry
+* El número de predictores a muestrearse en cada split de árbol
+
+--
+
+### min_n
+* el número de observaciones necesarias para seguir dividiendo nodos
+
 
 
 ---
