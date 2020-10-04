@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>presentacion.utf8</title>
+    <meta charset="utf-8" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <script src="libs/xaringanExtra-logo/logo.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+background-image: url(img/latinR-portada.png)
+background-size: cover
+class: animated slideInRight fadeOutLeft, middle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+.xaringan-extra-logo {
+  width: 110px;
+  height: 128px;
+  z-index: 0;
+  background-image: url('img/logo-tidymodels.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top:1em;right:1em;
+}
+</style>
+
+
+
+
+
+
+# Introducción a Machine Learning con `tidymodels`
+
+
+### LatinR: Conferencia Latinoamericana sobre Uso de R en Investigación + Desarrollo
+
+
+---
+
+
+# Agradecimientos 
+
+
+
+
+---
+
+background-image: url(img/equipo-fondo.png)
+background-size: cover
+
+# Equipo 
+
+&lt;img src="img/equipo2.png" width="100%" /&gt;
+  
+
+---
+background-image: url(img/material.png)
+background-size: cover
+
+## Material de este tutorial 
+
+&lt;br&gt;&lt;br&gt;
+### &lt;svg style="height:0.8em;top:.04em;position:relative;fill:black;" viewBox="0 0 496 512"&gt;&lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/&gt;&lt;/svg&gt; https://bit.ly/latinR2020-ml-tidy  
+
+&lt;br&gt;&lt;br&gt;
+### &lt;svg style="height:0.8em;top:.04em;position:relative;fill:red;" viewBox="0 0 576 512"&gt;&lt;path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/&gt;&lt;/svg&gt; https://www.youtube.com/c/LatinR
+
+
+
+---
+background-image: url(img/material.png)
+background-size: cover
+
+## Para seguir el código de este tutorial (1)
+
+### &lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 581 512"&gt;&lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/&gt;&lt;/svg&gt; Local en tu computadora con R/Rstudio instalado
+
+
+
+
+---
+
+
+background-image: url(img/material.png)
+background-size: cover
+
+## Para seguir el código de este tutorial (2)
+
+### Proyecto en Rstudio Cloud https://rstudio.cloud/project/1660523 
+
+
+
+
+
+---
+
+## Hoja de Ruta 
+
+
+* Breve introducción de ML.
+
+* Regresión Lineal y Múltiple
+
+* Clasificación con árboles de decisión y Random Forest.
+
+
+---
+
+## ¿Qué es modelar? 
+
+.bg-near-white.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+### Es el proceso de desarrollo de una herramienta matemática que genera una predicción precisa. 
+### Entrenamos un modelo para encontrar esa predicción precisa. &lt;sup&gt;*&lt;/sup&gt;
+]
+
+
+
+.footnote[&lt;sup&gt;*&lt;/sup&gt; Applied Predictive Modeling]
+
+---
+
+
+## Conceptos Importantes 💡
+
+* __Muestra, punto, observación, instancia__ se refiere a una unidad de análisis.
+&lt;br&gt;
+
+* __Set de entrenamiento__ son los datos utilizados para el modelado. 
+&lt;br&gt;
+
+* __Set de prueba__ son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos. 
+&lt;br&gt;
+
+* __Atributos, predictores, variables independientes o descriptores__ son los datos de entrada para la ecuación de predicción.
+&lt;br&gt; 
+* __Salida, variable dependiente, variable respuesta, clase, o "target"__ es la cantidad a ser predicha. 
+&lt;br&gt;
+
+
+
+.footnote[&lt;sup&gt;*&lt;/sup&gt; Applied Predictive Modeling]
+
+
+
+
+
+
+---
+
+## Etapas de un problema de machine learning (1)
+
+
+* **Definir el problema** ¿Qué se pretende predecir? ¿De qué datos se dispone? o ¿Qué datos es necesario conseguir?
+
+* **Explorar y entender los datos** que se van a emplear para crear el modelo.
+
+* **Métrica de éxito** definir una forma apropiada de cuantificar cómo de buenos son los resultados obtenidos.
+
+* **Preparar la estrategia para evaluar el modelo** separar las observaciones en un conjunto de entrenamiento, un conjunto de validación (o validación cruzada) y un conjunto de test. Es muy importante asegurar que ninguna información del conjunto de test participa en el proceso de entrenamiento del modelo.
+
+* **Preprocesar los datos** aplicar las transformaciones necesarias para que los datos puedan ser interpretados por el algoritmo de machine learning seleccionado.
+---
+
+## Etapas de un problema de machine learning (2)
+
+* **Ajustar un primer modelo** capaz de superar unos resultados mínimos. Por ejemplo, en problemas de clasificación, el mínimo a superar es el porcentaje de la clase mayoritaria (la moda).
+
+* Gradualmente, **mejorar el modelo** incorporando-creando nuevas variables u optimizando los hiperparámetros.
+
+* **Evaluar la capacidad del modelo final** con el conjunto de test para tener una estimación de la capacidad que tiene el modelo cuando predice nuevas observaciones.
+
+* **Entrenar el modelo final** con todos los datos disponibles.
+
+
+
+
+---
+
+
+## Tipos de aprendizaje
+        
+&lt;img src="img/ml.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+## Aprendizaje supervisado
+
+&lt;img src="img/supervised.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+.footnote[&lt;sup&gt;*&lt;/sup&gt; Machine Learning with R, the tidyverse and mlr]
+
+
+
+
+
+
+---
+
+
+## ¿Qué es EDA? 🔎
+
+.bg-near-white.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt2[
+### **EDA** o Análisis Exploratorio de Datos 
+
+#### es un ciclo iterativo y un proceso creativo en donde, 
+
+#### - **Generas preguntas acerca de tus datos.**
+
+#### - **Buscas respuestas mediante la visualización y transformación de los mismos.**
+
+#### - **En base a lo aprendido, refinas tus preguntas e incluso, generas nuevas.**
+
+]
+.footnote[Fuente: [R para Ciencia de  Datos](https://es.r4ds.hadley.nz/an%C3%A1lisis-exploratorio-de-datos-eda.html)]
+
+---
+
+## Cobran especial importancia en esta etapa
+
+
+.bg-near-white.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt2[
+
+#### Estudio de la distribución de las variables
+
+#### Presencia de valores perdidos
+
+#### Desbalance de las clases o grupos en estudio
+
+#### Presencia de datos extremos o outliers 
+
+#### Covariación de variables
+
+]
+
+.footnote[Fuente: [R para Ciencia de  Datos](https://es.r4ds.hadley.nz/an%C3%A1lisis-exploratorio-de-datos-eda.html)]
+---
+## ¿Por qué es importante el Análisis exploratorio de datos? 💡
+
+.bg-near-white.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt5[
+
+### Porque te permite conocer y entender tus datos. ]
+
+
+
+---
+
+# Métricas 📐
+
+
+.bg-near-white.b--dark-blue.ba.bw2.br3.shadow-5.ph4.mt2[
+
+### Durante el modelado de datos es probable que no hagamos un solo modelo, sino varios. 
+### La manera de saber qué tan buenos son, es evaluar esos algoritmos mediante métricas.
+### Tenemos métricas de regresión y clasificación.
+]
+
+
+
+---
+
+## Métricas en la clasificación
+
+     
+  
+&lt;img src="img/metricas1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Positivos verdaderos
+     
+  
+&lt;img src="img/metricas2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Falsos positivos 
+  
+&lt;img src="img/metricas3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Negativos verdaderos
+  
+&lt;img src="img/metricas4.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Falsos Negativos  
+  
+&lt;img src="img/metricas5.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+## Matriz de Confusión
+      
+  
+&lt;img src="img/matriz-confusion.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+    
+
+
+.footnote[Traducido de 10.7717/peerj.5666/fig-2]
+
+
+
+---
+
+## Entrenamiento, validación y testeo
+
+
+
+&lt;img src="img/train-val-test.jpeg" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+.footnote[Fuente: https://www.tmwr.org/resampling.html]
+
+
+
+
+---
+
+## Resampleo 
+
+El resampleo se utiliza en ML para estimar el desempeño de un modelo. 
+
+
+
+&lt;img src="img/resampling.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+.footnote[Fuente: https://www.tmwr.org/resampling.html]
+
+---
+
+
+## Validación cruzada
+
+
+
+
+&lt;img src="img/CV.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+.footnote[Fuente: https://www.tmwr.org/resampling.html]
+
+
+
+---
+## De caret a `tidymodels`
+
+
+
+.pull-left[
+El objetivo de caret era **unificar la sintaxis** para modelizar datos usando como base distintas librerías de R. 
+&lt;img src="img/caret.png" width="100%" align="right" /&gt;
+]
+
+--
+
+.pull-right[
+El objetivo de Tidymodels es además hacerlo **en un formato ordenado**. 
+&lt;img src="img/tidymodels.png" width="80%" align="right" /&gt;
+
+]
+
+
+---
+## `tidymodels`
+
+.bg-near-white.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+### `tidymodels` es un grupo de paquetes centrado en las tareas de modelización de datos. 
+### La modelización consta de varios pasos, la idea es que cada paso lo realice una librería diferente. 
+]
+
+
+
+.footnote[Sitio web: https://www.tidymodels.org/]
+
+---
+
+# Etapas del modelado de datos
+
+
+  
+&lt;img src="img/modeling.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+.footnote[Sitio web: https://www.tmwr.org/software-modeling.html]
+
+
+---
+
+## Modelado y `tidymodels`
+
+
+&lt;img src="img/tidy-w.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Librerías de `tidymodels`
+
+
+.left-column[
+### `library(rsample)`
+__Librería que nos permite hacer división del set de datos__
+
+]
+
+.right-column[
+
+&lt;img src="img/rsample.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+
+
+
+---
+
+## Librerías de `tidymodels`
+
+.left-column[
+#### `library(rsample)`
+### `library(recipes)`
+__Permite hacer preprocesamiento de los datos__
+]
+
+.right-column[
+
+&lt;img src="img/recipes.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+## Librerías de `tidymodels`
+
+.left-column[
+#### `library(rsample)`
+#### `library(recipes)`
+### `library(parsnip)`
+__Permite unificar los modelos a optimizar__
+]
+
+.right-column[
+
+&lt;img src="img/parsnip.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+## Librerías de `tidymodels`
+
+.left-column[
+#### `library(rsample)`
+#### `library(recipes)`
+#### `library(parsnip)`
+### `library(workflows)`
+__Nos permite unificar el flujo de trabajo__
+
+]
+
+.right-column[
+
+&lt;img src="img/workflow.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+---
+## Librerías de `tidymodels`
+
+.left-column[
+#### `library(rsample)`
+#### `library(recipes)`
+#### `library(parsnip)`
+#### `library(workflows)`
+### `library(tune)`
+__Permite el tuneo de los hiperparámetros de los modelos__
+]
+
+.right-column[
+
+&lt;img src="img/tune.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+
+
+---
+
+## Librerías de `tidymodels`
+
+.left-column[
+#### `library(rsample)`
+#### `library(recipes)`
+#### `library(parsnip)`
+#### `library(workflows)`
+#### `library(tune)`
+### `library(yardstick)`
+__Permite evaluar las métricas de los modelos__
+]
+
+.right-column[
+
+&lt;img src="img/yardstick.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+]
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
