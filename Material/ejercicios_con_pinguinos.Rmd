@@ -1,0 +1,244 @@
+---
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+
+---
+
+background-image: url(img/latinR-portada.png)
+background-size: cover
+class: animated slideInRight fadeOutLeft, middle
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-extra-styles, include=FALSE}
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+```
+
+```{r xaringan-extras2, echo=FALSE}
+xaringanExtra::use_tachyons()
+xaringanExtra::use_panelset()
+xaringanExtra::use_fit_screen()
+xaringanExtra::use_logo("img/logo-tidymodels.png")
+```
+
+
+```{r contador,, message=FALSE, warning=FALSE, include=FALSE} 
+library(fontawesome)
+library(emo)
+library(countdown)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#5542FF",
+  secondary_color = "#5542FF",
+  inverse_header_color = "#FFFFFF"
+)
+style_duo_accent(
+  header_font_google = google_font("Montserrat", "500"),
+  text_font_google   = google_font("Montserrat", "400", "300i"),
+  code_font_google   = google_font("Montserrat")
+)
+```
+
+
+
+# Introducción a Machine Learning con `tidymodels`
+
+
+### LatinR: Conferencia Latinoamericana sobre Uso de R en Investigación + Desarrollo
+---
+
+background-image: url(img/penguin2.jpg)
+background-size: cover
+class: inverse, animated slideInRight fadeOutLeft, center, top
+# PRACTICA
+
+---
+## Paquete: pingüinos `r emo::ji("penguin")`
+
+### Lectura de datos 
+
+```{r lectura_datos,message=FALSE, warning=FALSE}
+library(tidymodels) 
+library(datos)
+dataset <- pinguinos %>%
+  drop_na() %>% #elimino valores perdidos
+  select(-anio,-sexo, -isla) #elimino columnas q no son numéricas
+glimpse(dataset)
+```
+
+---
+## ¿Qué vamos a analizar?:
+
+La relación entre las variables continuas: peso y largo de alas
+
+```{r fig_correlacion, out.width="50%" }
+ggplot(dataset,aes(masa_corporal_g, largo_aleta_mm)) +
+  geom_point()
+```
+
+
+---
+## Correlación
+
+Observamos una mayor correlación entre el peso y el largo de las alas.
+
+```{r}
+cor(dataset$largo_aleta_mm,dataset$masa_corporal_g)
+```
+
+```{r}
+cor(dataset$largo_aleta_mm,dataset$alto_pico_mm)
+```
+
+```{r}
+cor(dataset$largo_pico_mm,dataset$masa_corporal_g)
+```
+
+---
+background-image: url(img/penguin2.jpg)
+background-size: cover
+class: inverse, animated slideInRight fadeOutLeft, top, center
+
+# Pregunta - Hipótesis `r emo::ji("crystal_ball")`
+
+
+#### ¿Es posible predecir el peso del pingüino a partir de la medición de la aleta?
+
+
+---
+## Ejercicio 1
+
+### División  del set de datos 
+
+```{r division_datos, split, cache=TRUE}
+set.seed(123) # <- muy importante
+p_split <- dataset %>%
+  initial_split(prop=0.75)
+p_train <- training(p_split)
+p_test  <- testing(p_split)
+p_split
+```
+
+`r countdown(minutes = 1, seconds = 30)`
+---
+
+## Ejercicio 2
+
+### Especificación del modelo que utilizaremos
+```{r spec_modelo}
+lm_spec <-linear_reg() %>%
+  set_engine(engine = "lm")
+```
+
+
+`r countdown(minutes = 2, seconds = 0)`
+---
+## Ejercicio 3
+
+### Ajuste del modelo con train 
+
+```{r ajuste_train}
+set.seed(123)
+lm_fit <- lm_spec %>%
+  fit(masa_corporal_g ~largo_aleta_mm ,
+    data = p_train
+  )
+```
+
+`r countdown(minutes = 2, seconds = 0)`
+---
+## Ejercicio 4
+
+### Predicción con train
+
+```{r pred_train}
+prediccion_train <- lm_fit %>% 
+                predict(new_data = p_train) %>% 
+                mutate(verdadero = p_train$masa_corporal_g)
+prediccion_train
+
+```
+
+`r countdown(minutes = 2, seconds = 0)`
+---
+## Ejercicio 4
+
+### Predicción con test
+
+```{r pred_test}
+prediccion_test <- lm_fit %>% 
+                predict(new_data = p_test) %>% 
+                mutate(verdadero = p_test$masa_corporal_g)
+
+prediccion_test
+```
+
+`r countdown(minutes = 2, seconds = 00)`
+
+---
+## Ejercicio 5
+
+### Chequeo de la métricas
+
+```{r metricas}
+rmse(prediccion_train, truth = verdadero,estimate=.pred)
+rmse(prediccion_test, truth = verdadero,estimate=.pred)
+```
+
+
+---
+
+## Ejercicio 6
+
+#### ¿Podemos mejorar el desempeño del modelo agregando más variables? 
+
+* Intenta hacerlo de la forma tidy. 
+
+* Modifica la fórmula de `lm` agregando las variables
+
+* `largo_pico_mm`
+* `alto_pico_mm`
+* `largo_aleta_mm`
+
+
+#### ¿Mejora el error (RMSE) ?
+
+`r countdown(minutes = 5, seconds = 00)`
+---
+## Ejercicio 6 - respuesta
+
+```{r todojunto, cache=TRUE}
+set.seed(100) # Importante
+p_split  <- initial_split(dataset, prop=0.75) 
+p_train  <- training(p_split)
+p_test   <- testing(p_split)
+lm_fit_all      <- lm_spec %>% 
+                fit(masa_corporal_g ~ largo_pico_mm +alto_pico_mm+largo_aleta_mm,
+                    data = p_train)
+peso_pred_all  <- lm_fit_all %>% 
+                predict(new_data = p_test) %>% 
+                mutate(verdadero = p_test$masa_corporal_g)
+rmse(peso_pred_all, truth = verdadero,estimate=.pred)
+```
+---
+
+
+background-image: url(img/penguin2.jpg)
+background-size: cover
+class: inverse, animated slideInRight, top, center
+# `r emo::ji("sparkles")`**¡GRACIAS!**`r emo::ji("sparkles")`
+

@@ -38,7 +38,7 @@ La inscripción puede realizarse mediante las cuentas de meetup de
 
 
 # Objetivos de aprendizaje
-Los estudiantes aprenderan a entrenar, supervisar y generar predicciones con modelos de Machine Learning con los paquetes de Tidymodels.
+Los estudiantes entenderán cómo se entrenan, evalúan y generan predicciones con modelos de Regresión y Clasificación utilizando los paquetes del universo Tidymodels.
 
 💻 Antes del workshop
 ------------------------------------------------------------
@@ -57,7 +57,7 @@ En ambos casos, ten en cuenta cuál es el Sistema Operativo que utilizas y la ve
 -   Los paquetes que utilizaremos pueden instalarse, abriendo Rstudio y ejecutando las siguientes sentencias:
 
 ```r
-mis_paquetes <- c("tidyverse", "tidymodels","devtools", "datos", "kknn", "rpart", "rpart.plot", "rattle", "ranger", "partykit", "vip", "palmerpenguins")
+mis_paquetes <- c("tidyverse", "tidymodels","devtools", "datos", "easypackages","kknn", "rpart", "rpart.plot", "rattle", "ranger", "partykit", "vip", "palmerpenguins")
 
 install.packages(mis_paquetes, repos = "http://cran.rstudio.com")
 
