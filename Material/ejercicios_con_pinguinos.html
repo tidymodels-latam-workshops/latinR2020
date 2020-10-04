@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ejercicios_con_pinguinos.utf8</title>
+    <meta charset="utf-8" />
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+background-image: url(img/latinR-portada.png)
+background-size: cover
+class: animated slideInRight fadeOutLeft, middle
+
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(img/logo-tidymodels.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+
+
+
+
+
+
+
+# Introducción a Machine Learning con `tidymodels`
+
+
+### LatinR: Conferencia Latinoamericana sobre Uso de R en Investigación + Desarrollo
+---
+
+background-image: url(img/penguin2.jpg)
+background-size: cover
+class: inverse, animated slideInRight fadeOutLeft, center, top
+# PRACTICA
+
+---
+## Paquete: pingüinos 🐧
+
+### Lectura de datos 
+
+
+```r
+library(tidymodels) 
+library(datos)
+dataset &lt;- pinguinos %&gt;%
+  drop_na() %&gt;% #elimino valores perdidos
+  select(-anio,-sexo, -isla) #elimino columnas q no son numéricas
+glimpse(dataset)
+```
+
+```
+## Rows: 333
+## Columns: 5
+## $ especie         &lt;fct&gt; Adelia, Adelia, Adelia, Adelia, Adelia, Adelia, Ade...
+## $ largo_pico_mm   &lt;dbl&gt; 39.1, 39.5, 40.3, 36.7, 39.3, 38.9, 39.2, 41.1, 38....
+## $ alto_pico_mm    &lt;dbl&gt; 18.7, 17.4, 18.0, 19.3, 20.6, 17.8, 19.6, 17.6, 21....
+## $ largo_aleta_mm  &lt;int&gt; 181, 186, 195, 193, 190, 181, 195, 182, 191, 198, 1...
+## $ masa_corporal_g &lt;int&gt; 3750, 3800, 3250, 3450, 3650, 3625, 4675, 3200, 380...
+```
+
+---
+## ¿Qué vamos a analizar?:
+
+La relación entre las variables continuas: peso y largo de alas
+
+
+```r
+ggplot(dataset,aes(masa_corporal_g, largo_aleta_mm)) +
+  geom_point()
+```
+
+&lt;img src="ejercicios_con_pinguinos_files/figure-html/fig_correlacion-1.png" width="50%" /&gt;
+
+
+---
+## Correlación
+
+Observamos una mayor correlación entre el peso y el largo de las alas.
+
+
+```r
+cor(dataset$largo_aleta_mm,dataset$masa_corporal_g)
+```
+
+```
+## [1] 0.8729789
+```
+
+
+```r
+cor(dataset$largo_aleta_mm,dataset$alto_pico_mm)
+```
+
+```
+## [1] -0.5777917
+```
+
+
+```r
+cor(dataset$largo_pico_mm,dataset$masa_corporal_g)
+```
+
+```
+## [1] 0.5894511
+```
+
+---
+background-image: url(img/penguin2.jpg)
+background-size: cover
+class: inverse, animated slideInRight fadeOutLeft, top, center
+
+# Pregunta - Hipótesis 🔮
+
+
+#### ¿Es posible predecir el peso del pingüino a partir de la medición de la aleta?
+
+
+---
+## Ejercicio 1
+
+### División  del set de datos 
+
+
+```r
+set.seed(123) # &lt;- muy importante
+p_split &lt;- dataset %&gt;%
+  initial_split(prop=0.75)
+p_train &lt;- training(p_split)
+p_test  &lt;- testing(p_split)
+p_split
+```
+
+```
+## &lt;Analysis/Assess/Total&gt;
+## &lt;250/83/333&gt;
+```
+
+<div class="countdown" id="timer_5f7a2b63" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
+</div>
+---
+
+## Ejercicio 2
+
+### Especificación del modelo que utilizaremos
+
+```r
+lm_spec &lt;-linear_reg() %&gt;%
+  set_engine(engine = "lm")
+```
+
+
+<div class="countdown" id="timer_5f7a299c" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+---
+## Ejercicio 3
+
+### Ajuste del modelo con train 
+
+
+```r
+set.seed(123)
+lm_fit &lt;- lm_spec %&gt;%
+  fit(masa_corporal_g ~largo_aleta_mm ,
+    data = p_train
+  )
+```
+
+<div class="countdown" id="timer_5f7a28d3" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+---
+## Ejercicio 4
+
+### Predicción con train
+
+
+```r
+prediccion_train &lt;- lm_fit %&gt;% 
+                predict(new_data = p_train) %&gt;% 
+                mutate(verdadero = p_train$masa_corporal_g)
+prediccion_train
+```
+
+```
+## # A tibble: 250 x 2
+##    .pred verdadero
+##    &lt;dbl&gt;     &lt;int&gt;
+##  1 3191.      3750
+##  2 3445.      3800
+##  3 3900.      3250
+##  4 3647.      3650
+##  5 3191.      3625
+##  6 3242.      3200
+##  7 3698.      3800
+##  8 4052.      4400
+##  9 3394.      3700
+## 10 3900.      3450
+## # ... with 240 more rows
+```
+
+<div class="countdown" id="timer_5f7a29bc" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+---
+## Ejercicio 4
+
+### Predicción con test
+
+
+```r
+prediccion_test &lt;- lm_fit %&gt;% 
+                predict(new_data = p_test) %&gt;% 
+                mutate(verdadero = p_test$masa_corporal_g)
+
+prediccion_test
+```
+
+```
+## # A tibble: 83 x 2
+##    .pred verdadero
+##    &lt;dbl&gt;     &lt;int&gt;
+##  1 3799.      3450
+##  2 3900.      4675
+##  3 4001.      4500
+##  4 3343.      3325
+##  5 2837.      3400
+##  6 3495.      3200
+##  7 3141.      3950
+##  8 3039.      3250
+##  9 3647.      3950
+## 10 3191.      3300
+## # ... with 73 more rows
+```
+
+<div class="countdown" id="timer_5f7a2a4c" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+## Ejercicio 5
+
+### Chequeo de la métricas
+
+
+```r
+rmse(prediccion_train, truth = verdadero,estimate=.pred)
+```
+
+```
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard        394.
+```
+
+```r
+rmse(prediccion_test, truth = verdadero,estimate=.pred)
+```
+
+```
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard        388.
+```
+
+
+---
+
+## Ejercicio 6
+
+#### ¿Podemos mejorar el desempeño del modelo agregando más variables? 
+
+* Intenta hacerlo de la forma tidy. 
+
+* Modifica la fórmula de `lm` agregando las variables
+
+* `largo_pico_mm`
+* `alto_pico_mm`
+* `largo_aleta_mm`
+
+
+#### ¿Mejora el error (RMSE) ?
+
+<div class="countdown" id="timer_5f7a29c0" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+---
+## Ejercicio 6 - respuesta
+
+
+```r
+set.seed(100) # Importante
+p_split  &lt;- initial_split(dataset, prop=0.75) 
+p_train  &lt;- training(p_split)
+p_test   &lt;- testing(p_split)
+lm_fit_all      &lt;- lm_spec %&gt;% 
+                fit(masa_corporal_g ~ largo_pico_mm +alto_pico_mm+largo_aleta_mm,
+                    data = p_train)
+peso_pred_all  &lt;- lm_fit_all %&gt;% 
+                predict(new_data = p_test) %&gt;% 
+                mutate(verdadero = p_test$masa_corporal_g)
+rmse(peso_pred_all, truth = verdadero,estimate=.pred)
+```
+
+```
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard        372.
+```
+---
+
+
+background-image: url(img/penguin2.jpg)
+background-size: cover
+class: inverse, animated slideInRight, top, center
+# ✨**¡GRACIAS!**✨
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
