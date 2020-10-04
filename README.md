@@ -57,7 +57,7 @@ En ambos casos, ten en cuenta cuál es el Sistema Operativo que utilizas y la ve
 -   Los paquetes que utilizaremos pueden instalarse, abriendo Rstudio y ejecutando las siguientes sentencias:
 
 ```r
-mis_paquetes <- c("tidyverse", "tidymodels","devtools", "datos", "kknn", "rpart", "rpart.plot", "rattle", "ranger", "partykit", "vip", "palmerpenguins")
+mis_paquetes <- c("tidyverse", "tidymodels","devtools", "datos", "easypackages","kknn", "rpart", "rpart.plot", "rattle", "ranger", "partykit", "vip", "palmerpenguins")
 
 install.packages(mis_paquetes, repos = "http://cran.rstudio.com")
 
