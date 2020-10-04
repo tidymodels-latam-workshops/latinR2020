@@ -22,10 +22,9 @@ Este taller es introductorio y permitirá dar los primeros pasos en el universo 
 # ¿Este curso es para mí?
 
 1.  Tienes conocimientos básicos del lenguaje R y la IDE de Rstudio.
-2.  Quieres aprender especificamente sobre modelado de datos utilizando el conjunto de paquetes comprendidos en Tidymodels.
-3.  Tienes conocimientos básicos de ggplot2.
-4.  Tienes un manejo básico de tidyverse.
-5.  Quieres conocer cuáles son los modelos más comúnmente utilizados y cómo implementarlos con tidymodels.
+2.  Tienes un manejo básico de tidyverse.
+3.  Quieres tener un primer acercamiento al universo Tidymodels.
+4.  Quieres aprender sobre modelado predictivo utilizando los paquetes que forman parte de Tidymodels.
 
 Si crees que debes reforzar algún punto de los enunciados anteriormente, podes practicar con los [primers de Rstudio]().
 
