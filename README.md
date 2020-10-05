@@ -78,6 +78,7 @@ easypackages::libraries("tidyverse", "tidymodels","devtools", "datos", "kknn", "
 Tanto la [presentación]() como los [archivos rmarkdown]() se encuentran en la carpeta **Material**.
 
 * [Presentación](https://tidymodels-latam-workshops.github.io/latinR2020/Material/presentacion.html#1)
+* [Regresión - archivo RMarkdown](https://tidymodels-latam-workshops.github.io/latinR2020/Material/regresion_lineal_nfl_attendance.html)
 * [Clasificación](https://tidymodels-latam-workshops.github.io/latinR2020/Material/02-clasificacion-tuneo.html#1)
 
 :video_camera: Video 
