@@ -7,7 +7,7 @@ Presentadoras: [Roxana Noelia Villafañe](https://twitter.com/data_datum), [Ana 
 Fecha y Lugar
 -------------
 
-🗓️ Jueves 5 de Octubre de 2020  
+🗓️ Lunes 5 de Octubre de 2020  
 ⏰ Horario: 15-17 hs 
 
 🌎 [ Conferencia Latinoamericana sobre Uso de R en Investigación + Desarrollo - 7 al 9 de octubre 2020 - Virtual](https://latin-r.com/)
@@ -22,10 +22,9 @@ Este taller es introductorio y permitirá dar los primeros pasos en el universo 
 # ¿Este curso es para mí?
 
 1.  Tienes conocimientos básicos del lenguaje R y la IDE de Rstudio.
-2.  Quieres aprender especificamente sobre modelado de datos utilizando el conjunto de paquetes comprendidos en Tidymodels.
-3.  Tienes conocimientos básicos de ggplot2.
-4.  Tienes un manejo básico de tidyverse.
-5.  Quieres conocer cuáles son los modelos más comúnmente utilizados y cómo implementarlos con tidymodels.
+2.  Tienes un manejo básico de tidyverse.
+3.  Quieres tener un primer acercamiento al universo Tidymodels.
+4.  Quieres aprender sobre modelado predictivo utilizando los paquetes que forman parte de Tidymodels.
 
 Si crees que debes reforzar algún punto de los enunciados anteriormente, podes practicar con los [primers de Rstudio]().
 
@@ -38,7 +37,7 @@ La inscripción puede realizarse mediante las cuentas de meetup de
 
 
 # Objetivos de aprendizaje
-Los estudiantes aprenderan a entrenar, supervisar y generar predicciones con modelos de Machine Learning con los paquetes de Tidymodels.
+Los estudiantes entenderán cómo se entrenan, evalúan y generan predicciones con modelos de Regresión y Clasificación utilizando los paquetes del universo Tidymodels.
 
 💻 Antes del workshop
 ------------------------------------------------------------
@@ -57,7 +56,7 @@ En ambos casos, ten en cuenta cuál es el Sistema Operativo que utilizas y la ve
 -   Los paquetes que utilizaremos pueden instalarse, abriendo Rstudio y ejecutando las siguientes sentencias:
 
 ```r
-mis_paquetes <- c("tidyverse", "tidymodels","devtools", "datos", "kknn", "rpart", "rpart.plot", "rattle", "ranger", "partykit", "vip", "palmerpenguins")
+mis_paquetes <- c("tidyverse", "tidymodels","devtools", "datos", "easypackages","kknn", "rpart", "rpart.plot", "rattle", "ranger", "partykit", "vip", "palmerpenguins")
 
 install.packages(mis_paquetes, repos = "http://cran.rstudio.com")
 
