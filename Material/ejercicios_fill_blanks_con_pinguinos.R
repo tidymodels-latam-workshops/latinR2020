@@ -27,7 +27,8 @@ cor(dataset$largo_aleta_mm, dataset$masa_corporal_g)
 
 # Ejercicio 1
 ## División de datos en train y test
-set.seed(123)
+
+set.seed(1234)
 p_split <- dataset %>% --------- (prop= 0.75)  
 
 p_train <- training(-------)
@@ -46,7 +47,7 @@ lm_spec <- linear_reg() %>%
 # Ejercicio 3
 
 ### Ajuste del modelo con train 
-
+set.seed(1234)
 lm_fit <- lm_spec %>% 
           ----- (masa_corporal_g ~ largo_aleta_mm, data= -------)  
 
@@ -81,6 +82,8 @@ rmse(----------------, truth= verdadero, estimate= ----)
 ## Ejercicio 6
 
 ### ¿Podemos mejorar el desempeño del modelo agregando más variables? 
+
+### Utilizamos la especificación del modelo hecho más arriba (lm_spec)
 
 lm_fit_all <- ------- %>%          
            fit(masa_corporal_g ~ largo_aleta_mm + ------- + alto_pico_mm, data= p_test)            
