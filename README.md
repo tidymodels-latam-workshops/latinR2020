@@ -7,7 +7,7 @@ Presentadoras: [Roxana Noelia Villafañe](https://twitter.com/data_datum), [Ana 
 Fecha y Lugar
 -------------
 
-🗓️ Jueves 5 de Octubre de 2020  
+🗓️ Lunes 5 de Octubre de 2020  
 ⏰ Horario: 15-17 hs 
 
 🌎 [ Conferencia Latinoamericana sobre Uso de R en Investigación + Desarrollo - 7 al 9 de octubre 2020 - Virtual](https://latin-r.com/)
