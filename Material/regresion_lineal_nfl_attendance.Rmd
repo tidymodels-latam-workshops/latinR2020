@@ -4,7 +4,7 @@ author: "Basado en el blog de Julia Silge"
 date: "29/9/2020"
 output: 
   html_document:
-     theme: "journal"
+     css: xaringan-themer.css
      dev: png
      highlight: "default"
      toc: true
@@ -93,11 +93,9 @@ attendance_joined %>%
 
 
 
-
-
 Tengamos en cuenta que para los 32 equipos de la NFL, existen años en que lo dieron todo y aún así no llegaron a las eliminatorias o playoffs, lo que será bueno para modelar.
 
-¿Cuánto influye el *margin_of_victory*, una medida de los puntos anotados en relación con los puntos pérdidos, para llegar a los playoffs o eliminatorias?
+### ¿Cuánto influye el ´margin_of_victory´, una medida de los puntos anotados en relación con los puntos pérdidos, para llegar a los playoffs o eliminatorias?
 
 ```{r histograma, warning=FALSE, fig.height=7, fig.width=10, fig.show = "hold", fig.align='center'}
 attendance_joined %>%
@@ -166,23 +164,25 @@ nfl_test
 nfl_train
 ```
 
-## Ajuste del modelo utilizando **lm**
+## Especificación del modelo **lm**
 
 ```{r regresion_lineal, message=FALSE, warning=FALSE}
 lm_spec <- linear_reg() %>%   #parsnip
   set_engine(engine = "lm")
 
-lm_spec
-## Linear Regression Model Specification (regression)
-##
-## Computational engine: lm
+```
+
+## Ajuste del modelo utilizando **lm**
+```{r ajuste_lm, message=FALSE, warning=FALSE}
 lm_fit <- lm_spec %>%
   fit(weekly_attendance ~ .,
     data = nfl_train)
 
 lm_fit
-
 ```
+
+
+
 
 Ya fiteamos el primer modelo, ahora vamos por el segundo.
 
@@ -195,6 +195,7 @@ rf_spec
 
 ```
 
+
 ## Ajuste del modelo utilizando **random forest**
 
 ```{r}
@@ -206,11 +207,11 @@ rf_fit
 
 ```
 
-Observe que hemos ajustado ambos modelos utilizando nfl_train, es decir, los datos de entrenamiento. No hemos tocado los datos de las pruebas durante el entrenamiento.
+Aclaración: hemos ajustado ambos modelos utilizando ´nfl_train´, es decir, los datos de entrenamiento. No hemos tocado los datos de las pruebas durante el entrenamiento.
 
 
 ## Evaluación de los modelos
-Cuando sea el momento de evaluar nuestros modelos (para estimar qué tan bien funcionarán nuestros modelos con datos nuevos), analizaremos **nfl_test**. Podemos predecir cuál será la asistencia semanal tanto para los datos de entrenamiento como para los datos de prueba utilizando los modelos lm y de bosque aleatorio. Uno de los objetivos de tidymodels es poder utilizar código como el siguiente de formas predecibles y coherentes para muchos tipos de modelos, y utilizar las herramientas de tidyverse adecuadas para este tipo de tareas.
+Cuando sea el momento de evaluar nuestros modelos (para estimar qué tan bien funcionarán nuestros modelos con datos nuevos), analizaremos **nfl_test**. Podemos predecir cuál será la asistencia semanal a los partidos de la NFL tanto para los datos de entrenamiento como para los datos de prueba utilizando los modelos lm y de random forest. Uno de los objetivos de tidymodels es poder utilizar código como el siguiente de formas predecibles y coherentes para muchos tipos de modelos, y utilizar las herramientas de tidyverse adecuadas para este tipo de tareas.
 
 
 ```{r resultados, message=FALSE, warning=FALSE}
@@ -242,7 +243,7 @@ results_test <- lm_fit %>%
 results_test
 ```
 
-Para este modelo de regresión, veamos el **rmse** o erroc cuadrático medio de lo que hemos hecho hasta ahora.
+Para este modelo de regresión, la métrica que tendremos en cuenta para evaluar el modelo es el **rmse** o la raíz del error cuadrático medio de lo que hemos hecho hasta ahora.
 
 ```{r resultado_rsme_train, message=FALSE, warning=FALSE}
 results_train %>%
@@ -254,7 +255,7 @@ results_train %>%
 ```{r resultado_rsme_test, message=FALSE, warning=FALSE}
 results_test %>%
   group_by(model) %>%
-  rmse(truth = truth, estimate = .pred) %>% view
+  rmse(truth = truth, estimate = .pred) #%>% view
 results_test
 ```
 
@@ -280,172 +281,6 @@ results_test %>%
 
 ```
 
-## Intentemos mejorar el modelo
-No tomamos una decisión tan buena en la sección anterior; esperábamos que el modelo de bosque aleatorio evaluado una vez en todo el conjunto de entrenamiento nos ayudara a comprender algo sobre cómo funcionaría con nuevos datos. Esta sería una expectativa razonable para el modelo lineal, pero no para el bosque aleatorio. Afortunadamente, tenemos algunas opciones. Podemos volver a muestrear el conjunto de entrenamiento para producir una estimación de cómo funcionará el modelo. Dividamos nuestro conjunto de entrenamiento nfl_train en pliegues (digamos, 10) y ajustemos 10 versiones de nuestro modelo (cada una entrenada en nueve pliegues y evaluada en un pliegue retenido). Luego, midamos qué tan bien se desempeñan nuestros modelos. La función **vfold_cv ()** crea pliegues para validación cruzada, la función **fit_resamples ()** ajusta modelos a remuestreos como estos (para medir el desempeño), y luego podemos recolectar_metrics () del resultado.
-
-
-
-```{r resampleo, echo=TRUE, message=FALSE, warning=FALSE}
-set.seed(1234)
-nfl_folds <- vfold_cv(nfl_train, strata = playoffs)
-
-rf_res <- fit_resamples(
-  weekly_attendance ~ .,
-  rf_spec,
-  nfl_folds,
-  control = control_resamples(save_pred = TRUE)
-)
-
-rf_res %>%
-  collect_metrics() %>% view()
-
-
-```
-
-Recuerde que este sigue siendo el conjunto de datos de entrenamiento. Daríamos este paso en lugar del fragmento anterior con predecir (new_data = nfl_train), y aún compararíamos el rendimiento del modelo en los datos de prueba. Tenga en cuenta que ahora tenemos una estimación realista de los datos de entrenamiento que se acerca a los datos de prueba. Incluso podemos visualizar los resultados de nuestro modelo para los remuestreos.
-
-```{r  grafico_final, echo=TRUE, fig.align='center', fig.height=5, fig.show="hold", fig.width=8, message=FALSE, warning=FALSE}
-rf_res %>%
-  unnest(.predictions) %>%
-  ggplot(aes(weekly_attendance, .pred, color = id)) +
-  geom_abline(lty = 2, color = "gray80", size = 1.5) +
-  geom_point(alpha = 0.5) +
-  labs(
-    x = "Valor real",
-    y = "Asistencia del juego predicha",
-    color = NULL
-  )
-```
-
-## Regularización con Lasso
-
-## Pre-procesamientocon recipe: opción 1
-```{r}
-nfl_train2 <-nfl_train %>% select(weekly_attendance, margin_of_victory, strength_of_schedule, week)
-
-
-nfl_rec <- recipe(weekly_attendance ~ ., data = nfl_train2) %>%      
-  step_zv(all_numeric(), -all_outcomes()) %>%
-  step_normalize(all_numeric(), -all_outcomes())
-
-nfl_rec
-
-
-```
-
-## Pre-procesamientocon recipe:: opción 2
-
-```{r}
-nfl_rec2 <- recipe(weekly_attendance ~ ., data = nfl_train) %>%
-  update_role(team_name, new_role = "ID") %>%
-  step_zv(all_numeric(), -all_outcomes()) %>%
-  step_normalize(all_numeric(), -all_outcomes())
-
-nfl_prep <- nfl_rec2 %>%
-  prep(strings_as_factors = FALSE)
-```
-
-## Especifico el modelo
-
-```{r}
-install.packages("glmnet")
-install.packages("Matrix")
-library(Matrix)
-library(glmnet)
-lasso_spec <- linear_reg(penalty = 0.1, mixture = 1) %>%  set_engine("glmnet")
-
-#-----------------------------------------------
-# con recipe 1
-wf_nfl <- workflow() %>%   # con recipe 1
-  add_recipe(nfl_rec)
-
-
-lasso_fit <- wf_nfl %>%
-  add_model(lasso_spec) %>%
-  fit(data = nfl_train)
-
-lasso_fit %>%
-  pull_workflow_fit() %>%
-  tidy()
-
-#-----------------------------------------------
-# con recipe 2
-wf_nfl2 <- workflow() %>%  # con recipe 2
-  add_recipe(nfl_rec2)
-
-lasso_fit2 <- wf_nfl2 %>%
-  add_model(lasso_spec) %>%
-  fit(data = nfl_train)
-
-lasso_fit2 %>%
-  pull_workflow_fit() %>%
-  tidy()
-```
-
-## Tuneo con bootstrap
-
-```{r}
-set.seed(1234)
-nfl_boot <- bootstraps(nfl_train, strata = playoffs)
-
-tune_spec <- linear_reg(penalty = tune(), mixture = 1) %>%
-  set_engine("glmnet")
-
-lambda_grid <- grid_regular(penalty(), levels = 50)
-```
-
-
-```{r}
-doParallel::registerDoParallel()
-
-set.seed(2020)
-lasso_grid <- tune_grid(
-  wf_nfl %>% add_model(tune_spec),
-  resamples = nfl_boot,
-  grid = lambda_grid
-)
-# resultados
-
-lasso_grid %>% collect_metrics()
-```
-
-## Grafico
-
-```{r}
-lasso_grid %>%
-  collect_metrics() %>%
-  ggplot(aes(penalty, mean, color = .metric)) +
-  geom_errorbar(aes(
-    ymin = mean - std_err,
-    ymax = mean + std_err
-  ),
-  alpha = 0.5
-  ) +
-  geom_line(size = 1.5) +
-  facet_wrap(~.metric, scales = "free", nrow = 2) +
-  #scale_x_log10() +
-  theme(legend.position = "none")
-```
-
-
-```{r}
-lowest_rmse <- lasso_grid %>%
-  select_best("rmse")
-
-final_lasso <- finalize_workflow(
-  wf_nfl %>% add_model(tune_spec),
-  lowest_rmse
-)
-```
-
-
-```{r}
-last_fit(
-  final_lasso,
-  nfl_test
-) %>%
-  collect_metrics()
-```
 
 
 ## Referencias:
