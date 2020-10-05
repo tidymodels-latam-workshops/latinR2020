@@ -137,7 +137,7 @@ background-size: cover
 
 ## Para seguir el código de este tutorial (2)
 
-### Proyecto en Rstudio Cloud https://rstudio.cloud/project/1660523 
+### Proyecto en Rstudio Cloud https://rstudio.cloud/project/1698927 
 
 
 
@@ -212,7 +212,6 @@ background-size: cover
 * **Preprocesar los datos** aplicar las transformaciones necesarias para que los datos puedan ser interpretados por el algoritmo de machine learning seleccionado.
 
 
-.footnote[https://www.cienciadedatos.net/documentos/59_machine_learning_con_r_y_tidymodels]
 
 
 ---
