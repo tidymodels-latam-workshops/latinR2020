@@ -307,7 +307,7 @@ final_fit_dt %>%
   collect_metrics()
 ```
 
-
+    
 ---
 
 background-image: url(img/dt-fondo.png)

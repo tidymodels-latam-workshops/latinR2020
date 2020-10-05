@@ -81,13 +81,19 @@ xaringanExtra::use_fit_screen()
 
 # Agradecimientos 
 
+### Rladies Cuernavaca 
 
+### Rladies Mendoza
+
+### Rladies Resistencia Corrientes
+
+#### organización de latinR2020
 
 
 ---
-
 background-image: url(img/equipo-fondo.png)
 background-size: cover
+
 
 # Equipo 
 
@@ -97,6 +103,8 @@ knitr::include_graphics("img/equipo2.png")
   
 
 ---
+
+
 background-image: url(img/material.png)
 background-size: cover
 
@@ -118,7 +126,7 @@ background-size: cover
 
 ### `r fa("r-project", fill = "steelblue")` Local en tu computadora con R/Rstudio instalado
 
-
+#### Indicaciones en `r fa("github", fill = 'black')` https://bit.ly/latinR2020-ml-tidy  
 
 
 ---
@@ -202,6 +210,11 @@ background-size: cover
 * **Preparar la estrategia para evaluar el modelo** separar las observaciones en un conjunto de entrenamiento, un conjunto de validación (o validación cruzada) y un conjunto de test. Es muy importante asegurar que ninguna información del conjunto de test participa en el proceso de entrenamiento del modelo.
 
 * **Preprocesar los datos** aplicar las transformaciones necesarias para que los datos puedan ser interpretados por el algoritmo de machine learning seleccionado.
+
+
+.footnote[https://www.cienciadedatos.net/documentos/59_machine_learning_con_r_y_tidymodels]
+
+
 ---
 
 ## Etapas de un problema de machine learning (2)
@@ -215,6 +228,7 @@ background-size: cover
 * **Entrenar el modelo final** con todos los datos disponibles.
 
 
+.footnote[https://www.cienciadedatos.net/documentos/59_machine_learning_con_r_y_tidymodels]
 
 
 ---
