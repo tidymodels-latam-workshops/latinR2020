@@ -44,7 +44,9 @@ Los estudiantes entenderán cómo se entrenan, evalúan y generan predicciones c
 
 Gracias por inscribirte a este workshop, en el mismo trabajaremos con la versión más reciente de R y Rstudio, por lo que, para aprovecharlo deberás traer una pc portátil con lo siguiente instalado:
 
-Instalación de R and RStudio
+Para seguir este workshop tienes 2 opciones: 
+
+### 1. Instalación de R and RStudio
 
 -   Una versión reciente de **R (>=3.6.4)** disponible de manera gratuita para su descarga en [CRAN](https://cran.r-project.org/).
     
@@ -72,6 +74,12 @@ Para verificar que los paquetes se cargaron correctamente, por favor ejecutá la
 easypackages::libraries("tidyverse", "tidymodels","devtools", "datos", "kknn", "rpart", "rattle", "AmesHousing", "ranger", "partykit", "vip")
 
 ```
+### 2. Sesión de Rstudio Cloud 
+
+También puedes seguir el código mediante una sesión en Rstudio Cloud en el siguiente link https://rstudio.cloud/project/1719389
+ 
+
+
 ✍️ Slides y Código
 ------------------------------------------------------------
 
@@ -80,6 +88,7 @@ Tanto la [presentación]() como los [archivos rmarkdown]() se encuentran en la c
 * [Presentación](https://tidymodels-latam-workshops.github.io/latinR2020/Material/presentacion.html#1)
 * [Regresión - archivo RMarkdown](https://tidymodels-latam-workshops.github.io/latinR2020/Material/regresion_lineal_nfl_attendance.html)
 * [Clasificación](https://tidymodels-latam-workshops.github.io/latinR2020/Material/02-clasificacion-tuneo.html#1)
+
 
 :video_camera: Video 
 -------------------------------------------------------------
