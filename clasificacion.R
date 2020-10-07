@@ -5,7 +5,6 @@ install.packages("palmerpenguins")
 install.packages("tidyverse")
 
 -------------------#ingreso librerias-------------------------------------
-
 library(tidyverse)
 library(tidymodels) 
 library(palmerpenguins)
@@ -89,6 +88,20 @@ trees_spec_20_1 %>%
                 resamples = p_folds) %>% 
   collect_metrics()
 
+## Segundo caso 
+set.seed(123) 
+trees_spec_20_05 <- decision_tree() %>% 
+  set_engine("rpart") %>% 
+  set_mode("classification") %>% 
+  set_args(min_n = 20, cost_complexity = 0.5) #especifico hiperparámetros
+
+trees_spec_20_05 %>%
+  fit_resamples(species ~ ., 
+                resamples = p_folds) %>% 
+  collect_metrics()
+
+## Tercer caso 
+
 -------#3. Dejando fijo el valor de C=0, pruebe min_n 1 y 5.------------
 
 
@@ -136,6 +149,8 @@ p_recipe
 rf_spec <- rand_forest() %>% 
   set_engine("ranger") %>% 
   set_mode("classification")
+rf_spec
+
 
 ------#paso 4: entrenamiento de la funcion----------------------
 #veamos como funciona sin tunning
@@ -192,7 +207,7 @@ tune_wf
 
 
 -------#paralelizamos----------------------------------
-install.packages("doParallel")
+# install.packages("doParallel")
 doParallel::registerDoParallel()
 set.seed(123)
 tune_res <- tune_grid(
@@ -202,7 +217,7 @@ tune_res <- tune_grid(
 )
 tune_res
 
-
+        
 -----------#elegimos el mejor modelos------------------
 best_auc <- select_best(tune_res, "roc_auc")
 final_rf <- finalize_model(

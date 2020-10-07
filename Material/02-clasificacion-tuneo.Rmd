@@ -307,7 +307,7 @@ final_fit_dt %>%
   collect_metrics()
 ```
 
-    
+      
 ---
 
 background-image: url(img/dt-fondo.png)
@@ -580,7 +580,7 @@ knitr::include_graphics("img/random-forest5.png")
 
 ### Hiperparámetros de 
 ### random forest
-
+  
 ### mtry
 * El número de predictores a muestrearse en cada split de árbol
 

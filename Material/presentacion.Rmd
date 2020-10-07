@@ -134,7 +134,7 @@ background-size: cover
 
 background-image: url(img/material.png)
 background-size: cover
-
+  
 ## Para seguir el código de este tutorial (2)
 
 ### Proyecto en Rstudio Cloud https://rstudio.cloud/project/1698927 
