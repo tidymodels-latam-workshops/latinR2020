@@ -83,7 +83,7 @@ También puedes seguir el código mediante una sesión en Rstudio Cloud en el si
 ✍️ Slides y Código
 ------------------------------------------------------------
 
-Tanto la [presentación]() como los [archivos rmarkdown]() se encuentran en la carpeta **Material**.
+Tanto la **presentación** como los **archivos rmarkdown** se encuentran en la carpeta [Material](https://github.com/tidymodels-latam-workshops/latinR2020/tree/master/Material).
 
 * [Presentación](https://tidymodels-latam-workshops.github.io/latinR2020/Material/presentacion.html#1)
 * [Regresión - archivo RMarkdown](https://tidymodels-latam-workshops.github.io/latinR2020/Material/regresion_lineal_nfl_attendance.html)
